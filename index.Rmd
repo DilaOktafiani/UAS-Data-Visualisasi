@@ -1,0 +1,169 @@
+---
+title: " UAS Data Visualization"
+author: "Dila Ananda OKtafiani-A3202300026-Rekayasa Perangkat Lunak"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: flatly
+    higlight: zenburn
+    toc: true
+    toc_float:
+      collapsed: true
+    df_print: paged
+bibliography: references.bib
+---
+
+```{=html}
+<style>
+/* Mengubah background menjadi gradasi pink dan lavender */
+body {
+  background: linear-gradient(to right, #ADD8E6, #E6E6FA); /* Gradasi blue dan ungu */
+  color: #333; /* Warna teks gelap untuk kontras */
+}
+
+/* Mengubah warna header */
+h1, h2, h3, h4, h5, h6 {
+  color: #800080;
+}
+
+/* Mengubah warna link */
+a {
+  color: #800080;
+}
+
+/* Mengubah warna teks paragraf */
+p {
+  color: #000000; /* Warna hitam*/
+}
+</style>
+```
+
+# Tujuan Analisis
+Tujuan dari analisis data ini adalah untuk mengeksplorasi dan memahami pola serta hubungan antar variabel dalam dataset. Visualisasi digunakan untuk menggambarkan distribusi data dan pola yang mungkin tidak terlihat hanya dengan tabe
+
+# Visualisasi Data
+
+```{r}
+# Membaca Data
+library(readxl)
+Data <- read_excel("Data.xlsx")
+View(Data)
+```
+
+## grafik univariat
+
+1. Histogram untuk Pendapatan_per_kapita
+```{r}
+# Memuat library
+library(ggplot2)
+
+# Membuat histogram untuk Pendapatan_per_kapita
+ggplot(Data, aes(x = Pendapatan_per_kapita)) +
+  geom_histogram(colour= "lightblue", fill = "pink", size = 1, line = ".") +
+  labs(title = "Distribusi Pendapatan per Kapita", x = "Pendapatan per Kapita", y = "Frekuensi") +
+  theme_classic()
+```
+
+## grafik bivariat
+
+1. Scatter plot antara Angka_Harapan_Hidup dan Pendapatan_per_kapita
+
+```{r}
+# Memuat library
+library(ggplot2)
+
+# Membuat scatter plot antara Angka_Harapan_Hidup dan Pendapatan_per_kapita
+ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup)) +
+  geom_point(colour = "lightblue", alpha = 0.5) +
+  labs(title = "Hubungan Antara Pendapatan per Kapita dan Angka Harapan Hidup", 
+       x = "Pendapatan per Kapita", y = "Angka Harapan Hidup") +
+  theme_classic()
+```
+
+2. Bar chart untuk Pendapatan per Kapita berdasarkan Benua
+
+```{r}
+# Memuat library
+library(ggplot2)
+
+# Membuat bar chart untuk Pendapatan per Kapita berdasarkan Benua
+ggplot(Data, aes(x = Benua, y = Pendapatan_per_kapita, fill = Benua)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Pendapatan per Kapita berdasarkan Benua", 
+       x = "Benua", y = "Pendapatan per Kapita") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("asia" = "lightblue", "africa" = "lightgreen", "europe" = "purple", "americas" = "#DDA0DD"))
+```
+
+## grafik multivariat
+
+1. Heatmap antara Pendapatan per kapita, Populasi, dan Angka Harapan Hidup
+
+```{r}
+# Memuat library
+library(ggplot2)
+
+# Membuat heatmap antara Pendapatan_per_kapita, Populasi, dan Angka_Harapan_Hidup
+ggplot(Data, aes(x = Pendapatan_per_kapita, y = Populasi, fill = Angka_Harapan_Hidup)) +
+  geom_tile() +
+  scale_fill_gradient(low = "lightgreen", high = "purple") +
+  labs(title = "Heatmap: Pendapatan per Kapita, Populasi, dan Angka Harapan Hidup",
+       x = "Pendapatan per Kapita", y = "Populasi", fill = "Angka Harapan Hidup") +
+  theme_classic()
+```
+
+
+2. 3D scatter plot dengan Angka Harapan Hidup, Pendapatan per kapita, dan Populasi
+
+```{r}
+# Memuat library
+library(plotly)
+
+# Membuat 3D scatter plot dengan Angka_Harapan_Hidup, Pendapatan_per_kapita, dan Populasi
+plot_ly(Data, 
+        x = ~Pendapatan_per_kapita, 
+        y = ~Angka_Harapan_Hidup, 
+        z = ~Populasi,  # bisa diganti dengan variabel lain, misal Jumlah_Anak
+        type = "scatter3d", 
+        mode = "markers",
+        color = ~Benua,  # Warna berdasarkan benua
+        colors = c('lightgreen', '#DDA0DD', 'lightblue', 'purple'),  # Menentukan warna
+        marker = list(size = 5)) %>%
+  layout(title = "3D Scatter Plot: Pendapatan per Kapita, Angka Harapan Hidup, dan Populasi",
+         scene = list(
+           xaxis = list(title = "Pendapatan per Kapita"),
+           yaxis = list(title = "Angka Harapan Hidup"),
+           zaxis = list(title = "Populasi")
+         ))
+```
+
+## grafik interaktif
+
+1. library plotly
+
+```{r}
+# Memuat library plotly
+library(plotly)
+
+# Membuat plotly scatter plot
+fig <- plot_ly(Data, x = ~Pendapatan_per_kapita, y = ~Angka_Harapan_Hidup, 
+               type = 'scatter', mode = 'markers', 
+               marker = list(color = 'rgba(255, 182, 193, .9)', size = 5)) %>%
+  layout(title = "Scatter Plot Interaktif: Pendapatan per Kapita vs Angka Harapan Hidup",
+         xaxis = list(title = "Pendapatan per Kapita"),
+         yaxis = list(title = "Angka Harapan Hidup"))
+
+# Menampilkan plot
+fig
+```
+
+
+# Kesimpulan
+Dari analisis dan visualisasi data ini, dapat disimpulkan beberapa hal berikut:
+
+1. **Pendapatan per Kapita dan Angka Harapan Hidup:** Terdapat hubungan positif antara pendapatan per kapita dengan angka harapan hidup. Negara dengan pendapatan per kapita yang lebih tinggi cenderung memiliki angka harapan hidup yang lebih panjang.
+2. **Distribusi Pendapatan:** Berdasarkan visualisasi bar chart, terdapat perbedaan yang mencolok dalam pendapatan per kapita antar benua. Benua Eropa dan Amerika umumnya memiliki pendapatan per kapita yang lebih tinggi dibandingkan dengan Asia dan Afrika.
+3. **Heatmap Hubungan Pendapatan, Populasi, dan Angka Harapan Hidup:** Visualisasi heatmap menunjukkan hubungan antara pendapatan per kapita, populasi, dan angka harapan hidup, dengan warna yang lebih gelap menandakan angka harapan hidup yang lebih tinggi, umumnya ditemukan pada negara dengan pendapatan tinggi.
+4. **3D Scatter Plot:** 3D scatter plot memberikan gambaran yang lebih jelas mengenai hubungan antara pendapatan per kapita, angka harapan hidup, dan populasi, yang memperlihatkan variasi di antara negara-negara dengan ukuran populasi yang berbeda.
+5. **Grafik Interaktif:** Plot interaktif menggunakan **plotly** memungkinkan pengguna untuk mengeksplorasi hubungan antara pendapatan per kapita dan angka harapan hidup secara dinamis dengan fitur zoom dan hover.
