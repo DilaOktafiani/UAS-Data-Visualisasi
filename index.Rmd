@@ -15,44 +15,50 @@ bibliography: references.bib
 
 ```{=html}
 <style>
-/* Mengubah background menjadi gradasi pink dan lavender */
+/* Mengubah background menjadi gradasi lilac */
 body {
-  background: linear-gradient(to right, #ADD8E6, #E6E6FA); /* Gradasi blue dan ungu */
+  background: linear-gradient(to right, #E6A9EC, #D8BFD8); /* Gradasi lilac */
   color: #333; /* Warna teks gelap untuk kontras */
 }
 
 /* Mengubah warna header */
 h1, h2, h3, h4, h5, h6 {
-  color: #800080;
+  color: #800080; /* Warna ungu tua untuk header */
 }
 
 /* Mengubah warna link */
 a {
-  color: #800080;
+  color: #800080; /* Warna ungu tua untuk link */
 }
 
 /* Mengubah warna teks paragraf */
 p {
-  color: #000000; /* Warna hitam*/
+  color: #000000; /* Warna hitam untuk teks paragraf */
 }
 </style>
 ```
 
 # Tujuan Analisis
-Tujuan dari analisis data ini adalah untuk mengeksplorasi dan memahami pola serta hubungan antar variabel dalam dataset. Visualisasi digunakan untuk menggambarkan distribusi data dan pola yang mungkin tidak terlihat hanya dengan tabe
+Tujuan dari analisis data ini adalah untuk mengeksplorasi dan memahami pola serta hubungan antar variabel dalam dataset. Visualisasi digunakan untuk menggambarkan distribusi data dan pola yang mungkin tidak terlihat hanya dengan tabel.
 
 # Visualisasi Data
 
+Membaca Data
 ```{r}
 # Membaca Data
 library(readxl)
 Data <- read_excel("Data.xlsx")
 View(Data)
 ```
+Penjelasan:
 
-## grafik univariat
+1. ``library(readxl)`` memuat pustaka untuk membaca file Excel.
+2. ``read_excel("Data.xlsx")`` membaca file Excel "Data.xlsx" dan menyimpannya dalam variabel ``Data``.
+3. ``View(Data)`` menampilkan data yang dibaca dalam tampilan visual di RStudio.
 
-1. Histogram untuk Pendapatan_per_kapita
+## Grafik Univariat
+### Histogram
+Histogram untuk Pendapatan_per_kapita
 ```{r}
 # Memuat library
 library(ggplot2)
@@ -64,10 +70,44 @@ ggplot(Data, aes(x = Pendapatan_per_kapita)) +
   theme_classic()
 ```
 
-## grafik bivariat
+Tahapan pembuatan grafik:
 
-1. Scatter plot antara Angka_Harapan_Hidup dan Pendapatan_per_kapita
+**1. Memuat Library** 
 
+Memuat pustaka **ggplot2** yang digunakan untuk visualisasi data di R.
+
+```{r}
+library(ggplot2)
+```
+
+**2. Membuat Histogram** 
+
+Histogram digunakan untuk menampilkan distribusi data dari satu variabel numerik, dalam hal ini **Pendapatan_per_kapita**. Pada tahap ini, kita mendefinisikan grafik menggunakan fungsi ``ggplot()``, memilih variabel yang akan dianalisis, dan menentukan jenis grafik yang akan digunakan, yaitu **geom_histogram()**. 
+
+  - ``aes(x = Pendapatan_per_kapita)``: Menentukan bahwa sumbu X akan berisi data                 
+    **Pendapatan_per_kapita**.
+
+  - ``geom_histogram()``: Membuat histogram dengan garis luar berwarna biru muda (lightblue) dan isi         histogram berwarna merah muda (pink).
+
+**3. Menambahkan Judul dan Label Sumbu** 
+
+Untuk memberikan konteks yang lebih jelas pada grafik, kita menambahkan judul dan label pada sumbu X dan Y menggunakan fungsi ``labs()``.
+
+  - ``title``: Memberikan judul yang informatif pada grafik, dalam hal ini, "Distribusi Pendapatan per       Kapita".
+
+  - ``x`` dan ``y``: Memberikan label yang jelas pada sumbu X dan Y, yang membantu pembaca memahami        variabel apa yang ditampilkan di masing-masing sumbu.
+
+**4. Menambahkan Tema** 
+
+Untuk tampilan yang lebih bersih dan sederhana, kita menggunakan tema ``theme_classic()``, yang memberikan latar belakang putih dan garis sumbu yang jelas.
+
+**5. Interpretasi Grafik** 
+
+Grafik ini menggambarkan distribusi **Pendapatan per Kapita** dari data yang ada. Berdasarkan histogram yang ditampilkan, kita bisa melihat sebaran frekuensi dari berbagai rentang pendapatan per kapita. Misalnya, jika sebagian besar data terkonsentrasi di sisi kiri grafik, itu menunjukkan bahwa sebagian besar individu atau entitas dalam dataset memiliki pendapatan per kapita yang lebih rendah. Sebaliknya, jika data lebih terkonsentrasi di sisi kanan, itu menunjukkan adanya pendapatan yang lebih tinggi.
+
+## Grafik Bivariat
+### Scatter plot 
+Scatter plot antara Angka_Harapan_Hidup dan Pendapatan_per_kapita
 ```{r}
 # Memuat library
 library(ggplot2)
@@ -80,25 +120,119 @@ ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup)) +
   theme_classic()
 ```
 
-2. Bar chart untuk Pendapatan per Kapita berdasarkan Benua
+Tahapan pembuatan grafik:
+
+**1. Memuat Library** 
+
+Memuat pustaka **ggplot2** yang digunakan untuk visualisasi data di R.
+
+```{r}
+library(ggplot2)
+```
+
+**2. Membuat Scatter Plot** 
+
+Scatter plot digunakan untuk menampilkan hubungan antara dua variabel numerik, dalam hal ini **Pendapatan_per_kapita** dan **Angka_Harapan_Hidup**. Pada tahap ini, kita mendefinisikan grafik menggunakan fungsi ``ggplot()``, memilih variabel yang akan dianalisis, dan menentukan jenis grafik yang akan digunakan, yaitu **geom_point()**.
+
+  - ``aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup)``: Menentukan bahwa sumbu X akan berisi        data **Pendapatan_per_kapita** dan sumbu Y akan berisi data **Angka_Harapan_Hidup**.
+
+  - ``geom_point()``: Membuat scatter plot dengan titik data yang diberi warna biru muda (lightblue)         dan tingkat transparansi (alpha) 0.5 untuk memberikan efek visual yang lebih halus.
+
+**3. Menambahkan Judul dan Label Sumbu** 
+
+Untuk memberikan konteks yang lebih jelas pada grafik, kita menambahkan judul dan label pada sumbu X dan Y menggunakan fungsi ``labs()``.
+
+  - ``title``: Memberikan judul yang informatif pada grafik, dalam hal ini, "Hubungan Antara Pendapatan       per Kapita dan Angka Harapan Hidup".
+
+  - ``x`` dan ``y``: Memberikan label yang jelas pada sumbu X dan Y, yang membantu pembaca memahami          variabel apa yang ditampilkan di masing-masing sumbu.
+
+**4. Menambahkan Tema**
+
+Untuk tampilan yang lebih bersih dan sederhana, kita menggunakan tema ``theme_classic()``, yang memberikan latar belakang putih dan garis sumbu yang jelas.
+
+**5. Interpretasi Grafik** 
+
+Grafik ini menggambarkan hubungan antara **Pendapatan per Kapita** dan **Angka Harapan Hidup**. Berdasarkan scatter plot yang ditampilkan, kita bisa melihat apakah ada korelasi antara kedua variabel tersebut. Misalnya, jika titik-titik data cenderung membentuk garis naik (positif), itu menunjukkan bahwa semakin tinggi pendapatan per kapita, semakin tinggi angka harapan hidup. Sebaliknya, jika tidak ada pola yang jelas atau jika titik-titik tersebar tanpa hubungan yang jelas, itu menunjukkan bahwa tidak ada korelasi yang kuat antara kedua variabel tersebut.
+
+### Bar chart 
+Bar chart untuk Rata-rata Pendapatan per Kapita berdasarkan Benua
 
 ```{r}
 # Memuat library
 library(ggplot2)
+library(dplyr)
 
-# Membuat bar chart untuk Pendapatan per Kapita berdasarkan Benua
-ggplot(Data, aes(x = Benua, y = Pendapatan_per_kapita, fill = Benua)) +
+# Menghitung rata-rata Pendapatan per Kapita berdasarkan Benua
+data_summary <- Data %>%
+  group_by(Benua) %>%
+  summarise(mean_pendapatan = mean(Pendapatan_per_kapita, na.rm = TRUE))
+
+# Membuat bar chart untuk rata-rata Pendapatan per Kapita berdasarkan Benua
+ggplot(data_summary, aes(x = Benua, y = mean_pendapatan, fill = Benua)) +
   geom_bar(stat = "identity") +
-  labs(title = "Pendapatan per Kapita berdasarkan Benua", 
-       x = "Benua", y = "Pendapatan per Kapita") +
+  labs(title = "Rata-rata Pendapatan per Kapita berdasarkan Benua", 
+       x = "Benua", y = "Rata-rata Pendapatan per Kapita") +
   theme_classic() +
   theme(legend.position = "none") +
-  scale_fill_manual(values = c("asia" = "lightblue", "africa" = "lightgreen", "europe" = "purple", "americas" = "#DDA0DD"))
+  scale_fill_manual(values = c("asia" = "lightblue", "africa" = "lightgreen", "europe" = "pink", "americas" = "purple"))
 ```
 
-## grafik multivariat
+Tahapan pembuatan grafik:
 
-1. Heatmap antara Pendapatan per kapita, Populasi, dan Angka Harapan Hidup
+**1. Memuat Library** 
+
+  - ``library(ggplot2)``: Memuat pustaka **ggplot2**, yang digunakan untuk membuat grafik.
+  
+  - ``library(dplyr)``: Memuat pustaka **dplyr**, yang digunakan untuk manipulasi data seperti               perhitungan rata-rata.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+**2. Menghitung Rata-rata Pendapatan per Kapita berdasarkan Benua** 
+
+  - ``Data %>%``: Menggunakan operator pipe (`%>%`) untuk memproses data secara berurutan.
+   
+  - ``group_by(Benua)``: Mengelompokkan data berdasarkan kolom **Benua**.
+   
+  - ``summarise(mean_pendapatan = mean(Pendapatan_per_kapita, na.rm = TRUE))``: Menghitung rata-rata         **Pendapatan per Kapita** untuk setiap kelompok **Benua**. `na.rm = TRUE` berarti data yang            kosong (NA) akan diabaikan dalam perhitungan rata-rata.
+
+**3. Membuat Bar Chart**
+
+  - ``ggplot(data_summary, aes(...))`: Membuat plot dengan data yang telah dihitung rata-ratanya             (`data_summary`). 
+  
+    - `x = Benua`: Sumbu X diisi dengan variabel **Benua**.
+  
+    - `y = mean_pendapatan`: Sumbu Y diisi dengan nilai rata-rata pendapatan per kapita.
+  
+    - `fill = Benua`: Mewarnai batang berdasarkan **Benua**.
+   
+  - `geom_bar(stat = "identity")`: Membuat grafik **bar chart** menggunakan nilai yang sudah dihitung     (bukan hitungan frekuensi).
+   
+  - `labs(...)`: Menambahkan judul grafik dan label untuk sumbu X dan Y.
+   
+  - `theme_classic()`: Menambahkan tema klasik dengan latar belakang putih dan garis sumbu yang jelas.
+   
+  - `theme(legend.position = "none")`: Menghilangkan legenda (karena sudah tercermin dalam warna            batang).
+   
+  - `scale_fill_manual(...)`: Menetapkan warna khusus untuk setiap **Benua**:
+
+    - Asia: `lightblue`
+    
+    - Afrika: `lightgreen`
+    
+    - Eropa: `pink`
+    
+    - Amerika: `purple`
+
+**4. Interpretasi Grafik**
+
+Grafik ini menunjukkan rata-rata **Pendapatan per Kapita** untuk setiap **Benua**. Setiap batang menggambarkan nilai rata-rata pendapatan untuk benua tertentu, dengan warna yang berbeda untuk setiap benua. Dengan melihat grafik ini, kita dapat membandingkan seberapa besar rata-rata pendapatan per kapita antar benua.
+
+## Grafik Multivariat
+### Heatmap
+Heatmap antara Pendapatan per kapita, Populasi, dan Angka Harapan Hidup
 
 ```{r}
 # Memuat library
@@ -113,9 +247,34 @@ ggplot(Data, aes(x = Pendapatan_per_kapita, y = Populasi, fill = Angka_Harapan_H
   theme_classic()
 ```
 
+Tahapan pembuatan grafik:
 
-2. 3D scatter plot dengan Angka Harapan Hidup, Pendapatan per kapita, dan Populasi
+**1. Memuat Library** 
 
+Memuat pustaka **ggplot2** yang digunakan untuk visualisasi data di R.
+
+```{r}
+library(ggplot2)
+```
+
+**2. Membuat Heatmap** 
+
+  - ``ggplot(Data, aes(x = Pendapatan_per_kapita, y = Populasi, fill = Angka_Harapan_Hidup))``:              Mengonfigurasi data yang akan digunakan untuk grafik, yaitu Pendapatan per Kapita pada sumbu X,        Populasi pada sumbu Y, dan Angka Harapan Hidup sebagai variabel yang digunakan untuk mengisi           warna (fill) tile.
+
+  - ``geom_tile()``: Fungsi untuk membuat grafik heatmap, di mana setiap kombinasi nilai Pendapatan per       Kapita dan Populasi diwakili oleh sebuah kotak (tile) yang warnanya dipengaruhi oleh nilai Angka       Harapan Hidup.
+
+  - ``scale_fill_gradient(low = "lightgreen", high = "purple")``: Menentukan gradasi warna, dengan           warna hijau muda untuk nilai Angka Harapan Hidup yang rendah dan ungu untuk nilai yang tinggi.
+
+  - ``labs()``: Menambahkan judul dan label pada sumbu X dan Y, serta label untuk warna (fill),              memberikan konteks tambahan pada grafik.
+
+  - ``theme_classic()``: Menambahkan tema klasik untuk tampilan yang lebih bersih dan sederhana.
+
+**3. Interpretasi Grafik**
+
+Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita**, **Populasi**, dan **Angka Harapan Hidup**. Warna pada heatmap menggambarkan nilai **Angka Harapan Hidup**, dengan warna hijau muda menunjukkan angka harapan hidup rendah dan ungu menunjukkan angka harapan hidup tinggi. Dapat dilihat apakah ada pola antara ketiga variabel tersebut, seperti apakah negara dengan pendapatan lebih tinggi cenderung memiliki angka harapan hidup yang lebih tinggi.
+
+### 3D scatter plot
+3D scatter plot dengan Angka Harapan Hidup, Pendapatan per kapita, dan Populasi
 ```{r}
 # Memuat library
 library(plotly)
@@ -128,7 +287,7 @@ plot_ly(Data,
         type = "scatter3d", 
         mode = "markers",
         color = ~Benua,  # Warna berdasarkan benua
-        colors = c('lightgreen', '#DDA0DD', 'lightblue', 'purple'),  # Menentukan warna
+        colors = c('lightgreen', 'purple', 'lightblue', 'pink'),  # Menentukan warna
         marker = list(size = 5)) %>%
   layout(title = "3D Scatter Plot: Pendapatan per Kapita, Angka Harapan Hidup, dan Populasi",
          scene = list(
@@ -138,10 +297,51 @@ plot_ly(Data,
          ))
 ```
 
-## grafik interaktif
+Tahapan pembuatan grafik:
 
-1. library plotly
+**1. Memuat Library** 
 
+Memuat pustaka **plotly**, yang digunakan untuk membuat grafik interaktif, termasuk **3D scatter plot**.
+
+```{r}
+library(plotly)
+```
+
+**2. Membuat 3D Scatter Plot** 
+
+  - ``x = ~Pendapatan_per_kapita, y = ~Angka_Harapan_Hidup, z = ~Populasi``: Mengatur variabel pada         sumbu X, Y, dan Z untuk grafik 3D.
+  
+  - ``type = "scatter3d"``: Menggunakan tipe **scatter3d** untuk membuat grafik 3D.
+  
+  - ``mode = "markers"``: Menampilkan titik data (marker) di grafik.
+  
+  - ``color = ~Benua``: Pewarnaan titik berdasarkan **Benua** untuk membedakan negara atau wilayah.
+  
+  - ``colors = c('lightgreen', 'purple', 'lightblue', 'pink')``: Menentukan warna untuk masing-masing       benua.
+  
+  - ``marker = list(size = 5)``: Mengatur ukuran titik data.
+  
+  - ``layout()``: Menambahkan judul dan label pada sumbu X, Y, dan Z untuk memberikan konteks.
+
+**3. Menambahkan Layout dan Pengaturan Sumbu**
+
+  - ``layout()`` digunakan untuk menyesuaikan tampilan plot, seperti menambahkan judul, pengaturan           sumbu, dan elemen desain lainnya.
+
+  - ``title = "3D Scatter Plot: Pendapatan per Kapita, Angka Harapan Hidup, dan Populasi"``: Menentukan       **judul grafik**, yang memberikan informasi mengenai isi grafik.
+
+  - ``xaxis = list(title = "Pendapatan per Kapita")``: Menentukan ***label untuk sumbu X***, yang            menunjukkan variabel ***Pendapatan per Kapita**.
+
+  - ``yaxis = list(title = "Angka Harapan Hidup")``: Menentukan **label untuk sumbu Y**, yang                menunjukkan variabel **Angka Harapan Hidup**.
+
+  - ``zaxis = list(title = "Populasi")``: Menentukan **label untuk sumbu Z**, yang menunjukkan variabel       **Populasi**.
+
+**4. Interpretasi Grafik**
+
+Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita, Angka Harapan Hidup**, dan **Populasi** dalam format 3D. Titik data yang diwarnai berdasarkan **Benua** memberikan visualisasi interaktif yang memudahkan untuk melihat distribusi data pada ketiga variabel ini, serta membandingkan bagaimana masing-masing benua tersebar pada dimensi tersebut.
+
+## Grafik Interaktif
+###plotly
+plotly scatter plot
 ```{r}
 # Memuat library plotly
 library(plotly)
@@ -158,12 +358,71 @@ fig <- plot_ly(Data, x = ~Pendapatan_per_kapita, y = ~Angka_Harapan_Hidup,
 fig
 ```
 
+Tahapan pembuatan grafik:
+
+**1. Memuat Library**
+
+Memuat pustaka **Plotly** yang digunakan untuk membuat visualisasi interaktif di R. Plotly memungkinkan kita membuat grafik yang bisa diinteraksikan, seperti zooming, hover info, dan lainnya.
+
+```{r}
+library(plotly)
+```
+
+**2. Membuat Scatter Plot** 
+
+  - ``plot_ly()`` adalah fungsi utama dari Plotly untuk membuat grafik. Di sini, ```plot_ly()``              digunakan untuk membuat scatter plot dengan data yang diambil dari variabel ``Data``.
+
+  - ``Data``: Ini adalah data frame yang berisi variabel-variabel yang ingin dipetakan ke grafik.
+
+  - ``x = ~Pendapatan_per_kapita``: Menentukan bahwa sumbu X akan menampilkan data dari variabel             **Pendapatan_per_kapita**.
+
+  - ``y = ~Angka_Harapan_Hidup``: Menentukan bahwa sumbu Y akan menampilkan data dari variabel               **Angka_Harapan_Hidup**.
+
+  - ``type = 'scatter'``: Menentukan jenis grafik yang digunakan adalah scatter plot, yang                   menggambarkan hubungan dua variabel.
+
+  - ``mode = 'markers'``: Menggunakan mode **'markers'** yang berarti setiap data poin akan digambarkan       sebagai titik-titik (bukan garis).
+
+  - ``marker = list(color = 'rgba(255, 182, 193, .9)', size = 5)``: Menentukan gaya visual dari titik        data. Di sini, titik data akan memiliki warna **pink muda** ``(rgba(255, 182, 193, .9))`` dan          ukuran **5**.
+
+**3. Menambahkan Layout dan Pengaturan Sumbu**
+
+  - ``layout()`` digunakan untuk menyesuaikan tampilan plot, seperti judul dan label sumbu.
+
+  - ``title = "Scatter Plot Interaktif: Pendapatan per Kapita vs Angka Harapan Hidup"``: Menentukan          judul grafik.
+
+  - ``xaxis = list(title = "Pendapatan per Kapita")``: Menentukan label untuk sumbu X.
+
+  - ``yaxis = list(title = "Angka Harapan Hidup")``: Menentukan label untuk sumbu Y.
+
+**4. Menampilkan Grafik**
+
+Di sini, ``fig`` adalah objek yang menyimpan plot yang sudah dibuat. Dengan mengetikkan ``fig`` atau menggunakan fungsi ``print()``, plot tersebut akan ditampilkan di output.
+
+**5. Interpretasi Grafik** 
+
+Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita** dan **Angka Harapan Hidup**. Titik data menggambarkan negara atau entitas, dengan sumbu X menunjukkan pendapatan dan sumbu Y menunjukkan angka harapan hidup. Secara umum, negara dengan pendapatan lebih tinggi cenderung memiliki angka harapan hidup yang lebih tinggi. Grafik ini interaktif, memungkinkan zoom dan hover untuk melihat nilai spesifik dari setiap titik.
 
 # Kesimpulan
-Dari analisis dan visualisasi data ini, dapat disimpulkan beberapa hal berikut:
+**1. Distribusi Pendapatan per Kapita**
 
-1. **Pendapatan per Kapita dan Angka Harapan Hidup:** Terdapat hubungan positif antara pendapatan per kapita dengan angka harapan hidup. Negara dengan pendapatan per kapita yang lebih tinggi cenderung memiliki angka harapan hidup yang lebih panjang.
-2. **Distribusi Pendapatan:** Berdasarkan visualisasi bar chart, terdapat perbedaan yang mencolok dalam pendapatan per kapita antar benua. Benua Eropa dan Amerika umumnya memiliki pendapatan per kapita yang lebih tinggi dibandingkan dengan Asia dan Afrika.
-3. **Heatmap Hubungan Pendapatan, Populasi, dan Angka Harapan Hidup:** Visualisasi heatmap menunjukkan hubungan antara pendapatan per kapita, populasi, dan angka harapan hidup, dengan warna yang lebih gelap menandakan angka harapan hidup yang lebih tinggi, umumnya ditemukan pada negara dengan pendapatan tinggi.
-4. **3D Scatter Plot:** 3D scatter plot memberikan gambaran yang lebih jelas mengenai hubungan antara pendapatan per kapita, angka harapan hidup, dan populasi, yang memperlihatkan variasi di antara negara-negara dengan ukuran populasi yang berbeda.
-5. **Grafik Interaktif:** Plot interaktif menggunakan **plotly** memungkinkan pengguna untuk mengeksplorasi hubungan antara pendapatan per kapita dan angka harapan hidup secara dinamis dengan fitur zoom dan hover.
+Histogram menunjukkan bahwa mayoritas data terpusat pada pendapatan per kapita yang lebih rendah, dengan hanya sedikit data pada kisaran pendapatan lebih tinggi, mengindikasikan bahwa banyak negara dalam dataset memiliki pendapatan rendah.
+
+**2. Hubungan antara Pendapatan per Kapita dan Angka Harapan Hidup**
+
+Scatter plot menunjukkan kecenderungan positif antara pendapatan per kapita dan angka harapan hidup, dimana negara dengan pendapatan lebih tinggi umumnya memiliki angka harapan hidup yang lebih tinggi.
+
+**3. Rata-rata Pendapatan per Kapita Berdasarkan Benua**
+
+Bar chart memperlihatkan bahwa Eropa dan Amerika memiliki rata-rata pendapatan per kapita yang jauh lebih tinggi dibandingkan dengan Asia dan Afrika, menunjukkan ketimpangan ekonomi antar benua.
+
+**4. Hubungan antara Pendapatan per Kapita, Populasi, dan Angka Harapan Hidup**
+
+Heatmap menunjukkan bahwa negara dengan pendapatan per kapita yang lebih tinggi cenderung memiliki angka harapan hidup yang lebih baik, meskipun populasi yang lebih besar tidak selalu berhubungan dengan peningkatan angka harapan hidup.
+
+**5. 3D Scatter Plot**
+
+Grafik 3D menggambarkan hubungan yang kompleks antara Pendapatan per Kapita, Angka Harapan Hidup, dan Populasi, dengan negara berpendapatan tinggi cenderung memiliki angka harapan hidup yang lebih baik.
+
+**6. Grafik Interaktif**
+
+Scatter plot interaktif memungkinkan eksplorasi lebih lanjut dan pemahaman yang lebih baik mengenai hubungan antara Pendapatan per Kapita dan Angka Harapan Hidup dengan fitur interaktif seperti zooming dan hover info.
