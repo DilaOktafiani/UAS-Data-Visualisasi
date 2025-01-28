@@ -1,6 +1,6 @@
 ---
 title: " UAS Data Visualization"
-author: "Dila Ananda OKtafiani-A3202300026-Rekayasa Perangkat Lunak"
+author: "Dila Ananda Oktafiani-A3202300026-Rekayasa Perangkat Lunak"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -17,7 +17,7 @@ bibliography: references.bib
 <style>
 /* Mengubah background menjadi gradasi lilac */
 body {
-  background: linear-gradient(to right, #E6A9EC, #D8BFD8); /* Gradasi lilac */
+  background: #F2D4FF;
   color: #333; /* Warna teks gelap untuk kontras */
 }
 
@@ -174,7 +174,7 @@ ggplot(data_summary, aes(x = Benua, y = mean_pendapatan, fill = Benua)) +
        x = "Benua", y = "Rata-rata Pendapatan per Kapita") +
   theme_classic() +
   theme(legend.position = "none") +
-  scale_fill_manual(values = c("asia" = "lightblue", "africa" = "lightgreen", "europe" = "pink", "americas" = "purple"))
+  scale_fill_manual(values = c("asia" = "orange", "africa" = "green", "europe" = "red", "americas" = "blue"))
 ```
 
 Tahapan pembuatan grafik:
@@ -218,13 +218,13 @@ library(dplyr)
    
   - `scale_fill_manual(...)`: Menetapkan warna khusus untuk setiap **Benua**:
 
-    - Asia: `lightblue`
+    - Asia: `orange`
     
-    - Afrika: `lightgreen`
+    - Afrika: `green`
     
-    - Eropa: `pink`
+    - Eropa: `red`
     
-    - Amerika: `purple`
+    - Amerika: `blue`
 
 **4. Interpretasi Grafik**
 
@@ -233,7 +233,6 @@ Grafik ini menunjukkan rata-rata **Pendapatan per Kapita** untuk setiap **Benua*
 ## Grafik Multivariat
 ### Heatmap
 Heatmap antara Pendapatan per kapita, Populasi, dan Angka Harapan Hidup
-
 ```{r}
 # Memuat library
 library(ggplot2)
@@ -241,7 +240,7 @@ library(ggplot2)
 # Membuat heatmap antara Pendapatan_per_kapita, Populasi, dan Angka_Harapan_Hidup
 ggplot(Data, aes(x = Pendapatan_per_kapita, y = Populasi, fill = Angka_Harapan_Hidup)) +
   geom_tile() +
-  scale_fill_gradient(low = "lightgreen", high = "purple") +
+  scale_fill_gradient(low = "green", high = "red") +
   labs(title = "Heatmap: Pendapatan per Kapita, Populasi, dan Angka Harapan Hidup",
        x = "Pendapatan per Kapita", y = "Populasi", fill = "Angka Harapan Hidup") +
   theme_classic()
@@ -263,7 +262,7 @@ library(ggplot2)
 
   - ``geom_tile()``: Fungsi untuk membuat grafik heatmap, di mana setiap kombinasi nilai Pendapatan per       Kapita dan Populasi diwakili oleh sebuah kotak (tile) yang warnanya dipengaruhi oleh nilai Angka       Harapan Hidup.
 
-  - ``scale_fill_gradient(low = "lightgreen", high = "purple")``: Menentukan gradasi warna, dengan           warna hijau muda untuk nilai Angka Harapan Hidup yang rendah dan ungu untuk nilai yang tinggi.
+  - ``scale_fill_gradient(low = "green", high = "red")``: Menentukan gradasi warna, dengan                   warna hijau untuk nilai Angka Harapan Hidup yang rendah dan merah untuk nilai yang tinggi.
 
   - ``labs()``: Menambahkan judul dan label pada sumbu X dan Y, serta label untuk warna (fill),              memberikan konteks tambahan pada grafik.
 
@@ -271,7 +270,7 @@ library(ggplot2)
 
 **3. Interpretasi Grafik**
 
-Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita**, **Populasi**, dan **Angka Harapan Hidup**. Warna pada heatmap menggambarkan nilai **Angka Harapan Hidup**, dengan warna hijau muda menunjukkan angka harapan hidup rendah dan ungu menunjukkan angka harapan hidup tinggi. Dapat dilihat apakah ada pola antara ketiga variabel tersebut, seperti apakah negara dengan pendapatan lebih tinggi cenderung memiliki angka harapan hidup yang lebih tinggi.
+Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita**, **Populasi**, dan **Angka Harapan Hidup**. Warna pada heatmap menggambarkan nilai **Angka Harapan Hidup**, dengan warna hijau menunjukkan angka harapan hidup rendah dan merah menunjukkan angka harapan hidup tinggi. Dapat dilihat apakah ada pola antara ketiga variabel tersebut, seperti apakah negara dengan pendapatan lebih tinggi cenderung memiliki angka harapan hidup yang lebih tinggi.
 
 ### 3D scatter plot
 3D scatter plot dengan Angka Harapan Hidup, Pendapatan per kapita, dan Populasi
@@ -287,7 +286,7 @@ plot_ly(Data,
         type = "scatter3d", 
         mode = "markers",
         color = ~Benua,  # Warna berdasarkan benua
-        colors = c('lightgreen', 'purple', 'lightblue', 'pink'),  # Menentukan warna
+        colors = c('green', 'blue', 'orange', 'red'),  # Menentukan warna
         marker = list(size = 5)) %>%
   layout(title = "3D Scatter Plot: Pendapatan per Kapita, Angka Harapan Hidup, dan Populasi",
          scene = list(
@@ -317,7 +316,7 @@ library(plotly)
   
   - ``color = ~Benua``: Pewarnaan titik berdasarkan **Benua** untuk membedakan negara atau wilayah.
   
-  - ``colors = c('lightgreen', 'purple', 'lightblue', 'pink')``: Menentukan warna untuk masing-masing       benua.
+  - ``colors = c('green', 'blue', 'orange', 'red')``: Menentukan warna untuk masing-masing benua.
   
   - ``marker = list(size = 5)``: Mengatur ukuran titik data.
   
@@ -340,7 +339,7 @@ library(plotly)
 Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita, Angka Harapan Hidup**, dan **Populasi** dalam format 3D. Titik data yang diwarnai berdasarkan **Benua** memberikan visualisasi interaktif yang memudahkan untuk melihat distribusi data pada ketiga variabel ini, serta membandingkan bagaimana masing-masing benua tersebar pada dimensi tersebut.
 
 ## Grafik Interaktif
-###plotly
+### plotly
 plotly scatter plot
 ```{r}
 # Memuat library plotly
@@ -403,6 +402,8 @@ Di sini, ``fig`` adalah objek yang menyimpan plot yang sudah dibuat. Dengan meng
 Grafik ini menunjukkan hubungan antara **Pendapatan per Kapita** dan **Angka Harapan Hidup**. Titik data menggambarkan negara atau entitas, dengan sumbu X menunjukkan pendapatan dan sumbu Y menunjukkan angka harapan hidup. Secara umum, negara dengan pendapatan lebih tinggi cenderung memiliki angka harapan hidup yang lebih tinggi. Grafik ini interaktif, memungkinkan zoom dan hover untuk melihat nilai spesifik dari setiap titik.
 
 # Kesimpulan
+Berikut adalah kesimpulan yang dapat diambil dari visualisasi data:
+
 **1. Distribusi Pendapatan per Kapita**
 
 Histogram menunjukkan bahwa mayoritas data terpusat pada pendapatan per kapita yang lebih rendah, dengan hanya sedikit data pada kisaran pendapatan lebih tinggi, mengindikasikan bahwa banyak negara dalam dataset memiliki pendapatan rendah.
